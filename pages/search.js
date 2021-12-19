@@ -26,9 +26,11 @@ function Search() {
         <StarIcon src="https://img.icons8.com/ios-filled/50/ffffff/star--v1.png" />
         Saved Places
       </SavedPlaces>
-      <ConfirmationButtonContainer>
-        <ConfirmationButton>Confirmation</ConfirmationButton>
-      </ConfirmationButtonContainer>
+      <Link href="/confirm">
+        <ConfirmationButtonContainer>
+          Confirm Locations
+        </ConfirmationButtonContainer>
+      </Link>
     </Wrapper>
   );
 }
@@ -40,7 +42,7 @@ const ButtonContainer = tw.div`
     bg-white px-4
 `;
 const BackButton = tw.img`
-    h-12
+    h-12 cursor-pointer
 `;
 
 const InputContainer = tw.div`
@@ -84,10 +86,7 @@ const StarIcon = tw.img`
 `;
 
 const ConfirmationButtonContainer = tw.div`
-    bg-black h-10 mt-2 mx-28 flex justify-center rounded-md
+    bg-black h-15 mt-2 text-center m-2 mx-4 py-4 rounded-md text-white text-2xl
 `;
 
-const ConfirmationButton = tw.button`
-    text-white 
-`;
 export default Search;
