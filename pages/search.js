@@ -1,12 +1,15 @@
 import React from "react";
 import tw from "tailwind-styled-components";
+import Link from "next/link";
 
 function Search() {
   return (
     <Wrapper>
-      <ButtonContainer>
-        <BackButton src="https://img.icons8.com/ios-filled/50/000000/left.png" />
-      </ButtonContainer>
+      <Link href="/">
+        <ButtonContainer>
+          <BackButton src="https://img.icons8.com/ios-filled/50/000000/left.png" />
+        </ButtonContainer>
+      </Link>
       <InputContainer>
         <FromToIcons>
           <Circle src="https://img.icons8.com/ios-filled/50/9CA3AF/filled-circle.png" />
@@ -23,6 +26,9 @@ function Search() {
         <StarIcon src="https://img.icons8.com/ios-filled/50/ffffff/star--v1.png" />
         Saved Places
       </SavedPlaces>
+      <ConfirmationButtonContainer>
+        <ConfirmationButton>Confirmation</ConfirmationButton>
+      </ConfirmationButtonContainer>
     </Wrapper>
   );
 }
@@ -77,4 +83,11 @@ const StarIcon = tw.img`
     bg-gray-400 h-10 w-10 p-2 rounded-full mr-2
 `;
 
+const ConfirmationButtonContainer = tw.div`
+    bg-black h-10 mt-2 mx-28 flex justify-center rounded-md
+`;
+
+const ConfirmationButton = tw.button`
+    text-white 
+`;
 export default Search;
