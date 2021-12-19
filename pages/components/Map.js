@@ -23,6 +23,12 @@ function Map({ pickupCoordinates, dropoffCoordinates }) {
     if (dropoffCoordinates) {
       addToMap(map, dropoffCoordinates);
     }
+
+    if (pickupCoordinates && dropoffCoordinates) {
+      map.fitBounds([pickupCoordinates, dropoffCoordinates], {
+        padding: 60,
+      });
+    }
   }, [pickupCoordinates, dropoffCoordinates]);
 
   //sets both pickup/dropoff location as a marker, since we passed the coordinates into the marker function
