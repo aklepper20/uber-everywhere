@@ -1,11 +1,31 @@
 import Head from "next/head";
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import tw from "tailwind-styled-components";
 import Map from "./components/Map";
 import Link from "next/link";
+import { auth } from "../firebase";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const [user, setUser] = useState(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    return onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser({
+          name: user.displayName,
+          photoUrl: user.photoURL,
+        });
+      } else {
+        setUser(null);
+        router.push("/login");
+      }
+    });
+  }, []);
+
   return (
     <Wrapper>
       <Map />
@@ -13,8 +33,12 @@ export default function Home() {
         <Header>
           <UberLogo src="https://i.ibb.co/84stgjq/uber-technologies-new-20218114.jpg" />
           <Profile>
-            <Name>Aly Klepper</Name>
-            <UserImage src="https://keyfinancialinc.com/wp-content/uploads/2016/02/sam-baez-bio.png" />
+            <Name>{user && user.name}</Name>
+            <UserImage
+              src={user && user.photoUrl}
+              onClick={() => signOut(auth)}
+              alt={user && user.name}
+            />
           </Profile>
         </Header>
         <ActionButtons>
@@ -49,7 +73,7 @@ flex justify-between items-center
 `;
 
 const UberLogo = tw.img` 
-  h-28
+  h-28 cursor-pointer
 `;
 
 const Profile = tw.div`

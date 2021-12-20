@@ -2,14 +2,15 @@ import React, { useEffect, useState } from "react";
 import tw from "tailwind-styled-components";
 import Map from "./components/Map";
 import { useRouter } from "next/router";
+import RideSelector from "./components/RideSelector";
 import Link from "next/link";
 
 function Confirm() {
   const router = useRouter();
   const { pickup, dropoff } = router.query;
-  console.log(pickup, dropoff);
-  const [pickupCoordinates, setPickupCoordinates] = useState("");
-  const [dropoffCoordinates, setDropoffCoordinates] = useState("");
+
+  const [pickupCoordinates, setPickupCoordinates] = useState([0, 0]);
+  const [dropoffCoordinates, setDropoffCoordinates] = useState([0, 0]);
 
   const getPickupCoordinates = (pickup) => {
     fetch(
@@ -48,11 +49,27 @@ function Confirm() {
 
   return (
     <Wrapper>
+      <Link href="/search">
+        <ButtonContainer>
+          <BackButton
+            src="https://img.icons8.com/ios-filled/50/000000/left.png"
+            alt="Back Button"
+          />
+        </ButtonContainer>
+      </Link>
       <Map
         pickupCoordinates={pickupCoordinates}
         dropoffCoordinates={dropoffCoordinates}
       />
-      <RideContainer></RideContainer>
+      <RideContainer>
+        <RideSelector
+          pickupCoordinates={pickupCoordinates}
+          dropoffCoordinates={dropoffCoordinates}
+        />
+        <ConfirmButtonContainer>
+          <ConfirmButton>Confirm UberX</ConfirmButton>
+        </ConfirmButtonContainer>
+      </RideContainer>
     </Wrapper>
   );
 }
@@ -61,7 +78,23 @@ const Wrapper = tw.div`
     flex flex-col h-screen
 `;
 
+const ButtonContainer = tw.div`
+  rounded-full absolute top-4 left-4 z-10 bg-white shadow-md cursor-pointer
+`;
+
+const BackButton = tw.img`
+  h-full object-contain
+`;
+
 const RideContainer = tw.div`
-    flex-1
+    flex-1 flex flex-col h-1/2
+`;
+
+const ConfirmButtonContainer = tw.div`
+    border-t-2
+`;
+
+const ConfirmButton = tw.div`
+  bg-black text-white my-4 py-4 mx-4 text-center text-xl
 `;
 export default Confirm;
